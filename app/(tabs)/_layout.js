@@ -13,7 +13,7 @@ export default function RootLayout() {
           headerShown: false
         }}/>
         <Tabs.Screen name='(home)' options={{title:'home', headerShown: false}} />
-        <Tabs.Screen name='(auth)' options={{title:'home', href:null}}/>
+        <Tabs.Screen name='(auth)' options={{title:'home', href:null, headerShown: false}}/>
     </Tabs>
   )
 }
