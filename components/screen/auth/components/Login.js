@@ -8,9 +8,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { connect } from 'react-redux';
 import { userLogin } from '../store/action';
 import { router } from 'expo-router';
+import * as secureStore from 'expo-secure-store'
 
 
-function Login({ userLogin, statusOfActions, loginData, isLoading,  }) {
+function Login({ userLogin, statusOfActions, loginData, isLoading, }) {
   const data = useSelector((state) => state.authReducer);
 
   const [loginDetail, setLoginDetail] = useState({ email: { value: '', error: false }, password: { value: '', error: false } });
@@ -18,6 +19,11 @@ function Login({ userLogin, statusOfActions, loginData, isLoading,  }) {
   useEffect(() => {
     switch (statusOfActions) {
       case 'USER_LOGIN_SUCCESS':
+        console.log(loginData);
+        async function settoken() {
+          await secureStore.setItemAsync('accessToken', loginData.access_token)
+        }
+        settoken();
         router.push('/')
         break;
       default:
@@ -50,10 +56,10 @@ function Login({ userLogin, statusOfActions, loginData, isLoading,  }) {
         secureTextEntry
       />
       <Button type='elevated' mode='contained' onPress={() => { submitHandler(); }}>Login</Button>
-      <Text style={{fontSize: 13, color: 'blue', marginTop: 10}}>Or</Text>
-      <Button type='elevated' onPress={() => { navigation.navigate('Register')  }}> <Text style={{textDecorationLine: 'underline'}}>Register</Text> </Button>
+      <Text style={{ fontSize: 13, color: 'blue', marginTop: 10 }}>Or</Text>
+      <Button type='elevated' onPress={() => { navigation.navigate('Register') }}> <Text style={{ textDecorationLine: 'underline' }}>Register</Text> </Button>
       <View
-        style={{ alignItems: 'center',marginTop:10 }}
+        style={{ alignItems: 'center', marginTop: 10 }}
       >
         <ActivityIndicator animating={isLoading} color={MD2Colors.blueGrey400} />
       </View>
@@ -79,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default LoginComponent =  connect(mapStateToProps, mapDispatchToProps)(Login);
+export default LoginComponent = connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,13 +1,66 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native';
 import { Button, MD2Colors, Text } from 'react-native-paper';
 import IconButton from '../../common/IconButton';
 import EmployeeCard from '../../common/EmployeeCard';
+import * as SecureStore from 'expo-secure-store'
+import { router } from 'expo-router';
+import RazorpayCheckout from 'react-native-razorpay';
 
 export default function Home() {
 
+  useEffect(() => {
+    const checkUserVerification = async () => {
+      try {
+        const token = await SecureStore.getItemAsync('accessToken');
+        if (!token) {
+          // router.push('/login');
+        }
+      } catch (error) {
+        console.error('Error checking token:', error);
+      }
+    };
+
+    checkUserVerification();
+  }, []);
+
+  const getVal = async () => {
+    const res = await SecureStore.getItemAsync('key');
+    console.log(res);
+  }
+
+  const somepayHandler = async () => {
+    var options = {
+      description: 'Payment towards consultation',
+      image: '',
+      currency: 'INR',
+      key: 'rzp_test_kiP0kAHLAXqZrK',
+      amount: 50000,
+      name: 'Acme Corp',
+      order_id: 'order_OhTdtICGzQo9dD', // Ensure this is a valid order_id created using Orders API
+      prefill: {
+        email: 'gaurav.kumar@example.com',
+        contact: '9191919191',
+        name: 'Gaurav Kumar'
+      },
+      theme: { color: '#53a20e' }
+    }
+  
+    try {
+      const data = await RazorpayCheckout.open(options);
+      // Handle success
+      alert(`Success: ${data.razorpay_payment_id}`);
+    } catch (error) {
+      // Log the error for debugging
+      console.error("Payment failed with error: ", error);
+      // Handle failure
+      alert(`Error: ${error.code} | ${error.description}`);
+    }
+  }
+  
+
   return (
-    <View style={{ backgroundColor: MD2Colors.white, height: "100%" }}>
+    <View style={{ backgroundColor: MD2Colors.white, height: "100%", marginTop: 30 }}>
       <Text style={style.heading}>Welcome, User</Text>
       <View style={style.companyView}>
 
@@ -27,7 +80,7 @@ export default function Home() {
         <Text style={style.subHeading}>
           Employee
         </Text>
-        <Button style={style.seeAllEmployeeBtn}>See all </Button>
+        <Button onPress={() => getVal()} style={style.seeAllEmployeeBtn}>See all </Button>
       </View>
 
       <View style={style.employeeCardContainer}>
@@ -37,6 +90,7 @@ export default function Home() {
         <Text style={style.subHeading}>Investments</Text>
         <View style={{ ...style.card, }}>
         </View>
+        <Button onPress={() => somepayHandler()}>Clivk meee</Button>
       </View>
     </View>
   )
