@@ -32,7 +32,6 @@ function Login({ userLogin, statusOfActions, loginData, isLoading, }) {
   }, [statusOfActions])
 
   const submitHandler = () => {
-    console.log(data);
     userLogin({ email: loginDetail.email.value, password: loginDetail.password.value })
   }
 

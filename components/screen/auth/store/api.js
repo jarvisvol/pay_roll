@@ -6,7 +6,7 @@ import {
     loginFailure,
     userRegisterSuccess,
     userRegisterFailure
-} from './action.js'
+} from './interface.js'
 
 export const userLogin = async(payload) => {
         try {

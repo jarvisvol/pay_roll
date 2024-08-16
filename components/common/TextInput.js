@@ -20,7 +20,7 @@ export default function TextInput({ ...props }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    marginVertical: 12,
+    marginVertical: 5,
   },
   input: {
     backgroundColor: theme.colors.surface,
