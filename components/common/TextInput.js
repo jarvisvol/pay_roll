@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { TextInput as Input } from 'react-native-paper'
 import { theme } from './theme'
 

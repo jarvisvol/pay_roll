@@ -6,7 +6,7 @@ const initialState = {
     error: {},
     statusOfActions: '',
     isLoading: false,
-    registerData: {}
+    userLocation: {}
 }
 
 
@@ -15,7 +15,7 @@ const userReducer = (state = initialState, action) => {
         case types.GET_USER_LOCATION:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
             }
         case types.GET_USER_LOCATION_SUCCESS:
             return {

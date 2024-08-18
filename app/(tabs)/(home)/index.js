@@ -1,3 +1,3 @@
-import Home from "../../../components/screen/home/Home";
+import Home from "../../../components/screen/home/components/Home";
 
 export default Home;

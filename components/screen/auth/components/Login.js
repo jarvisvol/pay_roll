@@ -4,12 +4,11 @@ import TextInput from '../../../common/TextInput';
 import Background from '../../../common/Background';
 import { Button } from 'react-native-paper';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import { userLogin } from '../store/action';
 import { router } from 'expo-router';
-import * as secureStore from 'expo-secure-store'
-
+import * as secureStore from 'expo-secure-store';
 
 function Login({ userLogin, statusOfActions, loginData, isLoading, }) {
   const data = useSelector((state) => state.authReducer);

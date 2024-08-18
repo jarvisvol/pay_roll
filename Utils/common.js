@@ -17,3 +17,14 @@ export const getCurrentLocation = () =>
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   });
+
+export const locations = {
+  india1: {
+    latitude: 37.421998333333335,
+    longitude:  -122.084
+  },
+  india2: {
+    latitude: 34.421998333333335,
+    longitude: -132.084
+  }
+}
