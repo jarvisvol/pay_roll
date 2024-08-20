@@ -13,19 +13,19 @@ const WelcomeScreen = () => {
         <Image
           style={[styles.frameIcon, styles.framePosition1]}
           contentFit="cover"
-          src={require("../../../assets/frame-1.png")}
+          source={require('../../../assets/images/frame1.png')}
         />
         <Image
           style={[styles.frameIcon1, styles.framePosition]}
           contentFit="cover"
-          source={require("../../../assets/frame-1.png")}
+          source={require("../../../assets/images/frame-11.png")}
         />
         <View style={styles.frame1}>
           <View style={styles.welcomeImage}>
             <Image
               style={styles.workFromHome}
               contentFit="cover"
-              source={require("../../../assets/work-from-home@3x.png")}
+              source={require("../../../assets/images/work-from-home.png")}
             />
           </View>
         </View>
