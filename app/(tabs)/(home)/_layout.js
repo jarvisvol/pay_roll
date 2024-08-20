@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import * as SecureStore from 'expo-secure-store'
 import { Platform } from 'react-native';
 
-export default function RootLayout() {
+export default function HomeLayout() {
   const [logedIn, setlogedIn] = useState();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function RootLayout() {
         token = await SecureStore.getItemAsync('accessToken');
       }
       if(!token?.length) {
-        router.push('/login');
+        router.push('/');
       } else {
         setlogedIn(true);
       }

@@ -1,9 +1,9 @@
 /* fonts */
 export const FontFamily = {
-    poppinsSemiBold: "Poppins-SemiBold",
-    poppinsMedium: "Poppins-Medium",
-    poppinsBold: "Poppins-Bold",
-    poppinsRegular: "Poppins-Regular",
+    poppinsSemiBold: "Poppins_600SemiBold",
+    poppinsMedium: "Poppins_500Medium",
+    poppinsBold: "Poppins_700Bold",
+    poppinsRegular: "Poppins_400Regular",
   };
   /* font sizes */
   export const FontSize = {
