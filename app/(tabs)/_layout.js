@@ -5,7 +5,7 @@ export default function TabLayout() {
   return (
     <Tabs>
         <Tabs.Screen name='(home)' options={{title:'home', headerShown: false}} />
-        <Tabs.Screen name='(auth)' options={{title:'home',href: null, headerShown: false}} />
+        <Tabs.Screen name='(auth)' options={{title:'auth', href: null, headerShown: false}} />
     </Tabs>
   )
 }
