@@ -22,6 +22,10 @@ import {
   Poppins_900Black_Italic,
 } from '@expo-google-fonts/poppins';
 
+
+SplashScreen.preventAutoHideAsync();
+
+
 export default FontStyle = ({children}) => {
   let [loaded, error] = useFonts({
     Poppins_100Thin,
