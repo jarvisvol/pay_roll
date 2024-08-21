@@ -66,16 +66,18 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
             onChangeText={(text) => setLoginDetail({ ...loginDetail, password: { value: text, error: '' } })}
           />
         </View>
-        <Text style={[styles.forgotYourPassword, styles.loginHereClr]}>
-          Forgot your password?
-        </Text>
+        <Pressable
+          onPress={() => {console.log("jij");}}
+        >
+          <Text style={[styles.forgotYourPassword, styles.loginHereClr]}>Forgot your password?</Text>
+        </Pressable>
         <View style={styles.actions}>
           <Button onPress={() => {submitHandler()}}  style={styles.button}>
             <Text style={[styles.button1, styles.button1Typo]}>Sign in</Text>
           </Button>
           <Pressable
             style={styles.button2}
-            onPress={() => navigation.navigate("RegisterScreen1")}
+            onPress={() => navigation.navigate("register")}
           >
             <Text style={[styles.button3, styles.button3Typo]}>
               Create new account
@@ -200,6 +202,7 @@ const styles = StyleSheet.create({
   },
   button1: {
     color: Color.colorWhite,
+    paddingTop: 10
   },
   button: {
     shadowColor: "#cbd6ff",
