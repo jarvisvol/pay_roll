@@ -4,7 +4,6 @@ import * as API from './api'
 export const userLogin = (payload) => {
     const request = API.userLogin(payload);
     return {
-        payload: request,
         type: types.USER_LOGIN
     }
 }

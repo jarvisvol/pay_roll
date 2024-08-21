@@ -14,8 +14,8 @@ export default function HomeLayout() {
       } else {
         token = await SecureStore.getItemAsync('accessToken');
       }
-      if(!token?.length) {
-        router.push('/');
+      if(token?.length) {
+        router.push('/welcome');
       } else {
         setlogedIn(true);
       }

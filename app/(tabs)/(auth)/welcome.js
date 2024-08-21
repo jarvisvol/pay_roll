@@ -13,12 +13,12 @@ const WelcomeScreen = () => {
         <Image
           style={[styles.frameIcon, styles.framePosition1]}
           contentFit="cover"
-          source={require('../../../assets/images/frame1.png')}
+          source={require('../../../assets/images/frameside.png')}
         />
         <Image
           style={[styles.frameIcon1, styles.framePosition]}
           contentFit="cover"
-          source={require("../../../assets/images/frame-11.png")}
+          source={require("../../../assets/images/circle.png")}
         />
         <View style={styles.frame1}>
           <View style={styles.welcomeImage}>
@@ -55,13 +55,13 @@ const WelcomeScreen = () => {
         <View style={styles.actionButtons}>
           <Pressable
             style={[styles.button, styles.buttonFlexBox]}
-            onPress={() => navigation.navigate("LoginScreen1")}
+            onPress={() => navigation.navigate("login")}
           >
             <Text style={[styles.button1, styles.buttonTypo]}>Login</Text>
           </Pressable>
           <Pressable
             style={[styles.button2, styles.buttonFlexBox]}
-            onPress={() => navigation.navigate("RegisterScreen1")}
+            onPress={() => navigation.navigate("register")}
           >
             <Text style={[styles.button3, styles.buttonTypo]}>Register</Text>
           </Pressable>
