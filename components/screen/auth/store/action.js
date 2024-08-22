@@ -2,7 +2,7 @@ import * as types from './action-types';
 import * as API from './api'
 
 export const userLogin = (payload) => {
-    const request = API.userLogin(payload);
+    API.userLogin(payload);
     return {
         type: types.USER_LOGIN
     }
@@ -23,9 +23,8 @@ export const loginFailure = (error) =>{
 }
 
 export const userRegister = (payload) => {
-    const request = API.userRegister(payload);
+    API.userRegister(payload);
     return {
-        payload: request,
         type: types.USER_REGISTER
     }
 }

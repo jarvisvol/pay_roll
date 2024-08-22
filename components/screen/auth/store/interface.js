@@ -11,7 +11,7 @@ export const loginSuccess = (result) =>{
 export const loginFailure = (error) =>{
     return {
         type: types.USER_LOGIN_FAILURE,
-        error: error.result
+        error: error
     }
 }
 

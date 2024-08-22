@@ -11,13 +11,15 @@ import { userLogin } from '../store/action';
 import { router } from 'expo-router';
 import * as secureStore from 'expo-secure-store';
 
-const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
+const Login = ({ userLogin, statusOfActions, loginData, isLoading, errorMessage }) => {
 
   const navigation = useNavigation();
 
   const [isFocused, setIsFocused] = useState({});
   
   const [loginDetail, setLoginDetail] = useState({ email: { value: '', error: false }, password: { value: '', error: false } });
+
+  const [error, setError] = useState({status: false});
 
   useEffect(() => {
     switch (statusOfActions) {
@@ -28,18 +30,38 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
         settoken();
         router.push('/')
         break;
+      case 'USER_LOGIN_FAILURE':
+        setError({
+          status: true,
+          message: errorMessage
+        })
       default:
         break;
     }
   }, [statusOfActions])
 
   const submitHandler = () => {
-    userLogin({ email: loginDetail.email.value, password: loginDetail.password.value })
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    function validateEmail(email) {
+        return emailRegex.test(email);
+    }
+    let isEmailValid = validateEmail(loginDetail.email.value);
+    let isPasswordValid = loginDetail.password.value.length >= 8;
+    if(!isEmailValid || !isPasswordValid){
+      setError({
+        message: !isEmailValid ? "Email is Not Valid" : "Password should be 8 charcater long",
+        status: true,
+      })
+    }
+    if(isPasswordValid && isEmailValid){
+      userLogin({ email: loginDetail.email.value, password: loginDetail.password.value })
+    }
   }
 
   return (
-    <View style={styles.loginScreen}>
-       <ActivityIndicator animating={isLoading} color={Color.colorGray} />
+    <View style={{...styles.loginScreen, opacity: isLoading ? 0.5 : 1}}>
+       <ActivityIndicator style={{zIndex: 4, position: 'relative', top: '60%', opacity: 1}} animating={isLoading} color={Color.colorSlateblue} size={'large'}/>
       <View style={styles.background} />
       <Image
         style={styles.objectsIcon}
@@ -54,7 +76,7 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
             onFocus={() => setIsFocused({type: "email", focus: true})}
             onBlur={() => setIsFocused({type: "email", focus: false})}
             value={loginDetail.email.value}
-            onChangeText={(text) => setLoginDetail({ ...loginDetail, email: { value: text, error: '' } })}
+            onChangeText={(text) => {setLoginDetail({ ...loginDetail, email: { value: text, error: '' }}); setError({})}}
           />
           <TextInput 
             style={[isFocused.type === "password" && isFocused.focus && styles.input, styles.input1, styles.inputSpaceBlock]} 
@@ -63,7 +85,7 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
             onBlur={() => setIsFocused({type: "password", focus: false})}
             secureTextEntry
             value={loginDetail.password.value}
-            onChangeText={(text) => setLoginDetail({ ...loginDetail, password: { value: text, error: '' } })}
+            onChangeText={(text) => {setLoginDetail({ ...loginDetail, password: { value: text, error: '' } }); setError({})}}
           />
         </View>
         <Pressable
@@ -72,8 +94,8 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
           <Text style={[styles.forgotYourPassword, styles.loginHereClr]}>Forgot your password?</Text>
         </Pressable>
         <View style={styles.actions}>
-          <Button onPress={() => {submitHandler()}}  style={styles.button}>
-            <Text style={[styles.button1, styles.button1Typo]}>Sign in</Text>
+          <Button onPress={() => {submitHandler()}}  style={[styles.button, styles.button1, styles.button1Typo]}>
+            Sign in
           </Button>
           <Pressable
             style={styles.button2}
@@ -119,6 +141,11 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading }) => {
           style={[styles.welcomeBackYouve, styles.button1Typo]}
         >
           {`Welcome back you’ve been missed!`}
+        </Text>
+        <Text style={styles.warningMsg} numberOfLines={1}>
+          {
+            error.status ? ` * ${error.message}` : ""
+          }
         </Text>
       </View>
     </View>
@@ -201,7 +228,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_sm,
   },
   button1: {
-    color: Color.colorWhite,
     paddingTop: 10
   },
   button: {
@@ -221,6 +247,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: 357,
     borderRadius: Border.br_3xs,
+    textColor: Color.colorWhite
   },
   button3: {
     color: Color.colorDarkslategray,
@@ -297,6 +324,10 @@ const styles = StyleSheet.create({
     height: 926,
     backgroundColor: Color.colorWhite,
   },
+  warningMsg: {
+    color: 'red',
+    fontSize: 12
+  }
 });
 
 
@@ -306,7 +337,8 @@ const mapStateToProps = (state) => {
   return {
     loginData: state.authReducer.loginData,
     statusOfActions: state.authReducer.statusOfActions,
-    isLoading: state.authReducer.isLoading
+    isLoading: state.authReducer.isLoading,
+    errorMessage: state.authReducer.errorMessage
   };
 };
 

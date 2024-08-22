@@ -6,7 +6,8 @@ const initialState = {
     error: {},
     statusOfActions: '',
     isLoading: false,
-    registerData: {}
+    registerData: {},
+    errorMessage: ""
 }
 
 
@@ -15,7 +16,8 @@ const authReducer = (state = initialState, action) => {
         case types.USER_LOGIN:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                statusOfActions: action.type
             }
         case types.USER_LOGIN_SUCCESS:
             return {
@@ -27,13 +29,15 @@ const authReducer = (state = initialState, action) => {
         case types.USER_LOGIN_FAILURE:
             return {
                 ...state,
-                error: action.error,
-                statusOfActions: action.type
+                errorMessage: action.error.message,
+                statusOfActions: action.type,
+                isLoading: false
             }
         case types.USER_REGISTER:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                statusOfActions: action.type
             }
         case types.USER_REGISTER_SUCCESS:
             return {
@@ -45,8 +49,8 @@ const authReducer = (state = initialState, action) => {
         case types.USER_REGISTER_FAILURE:
             return {
                 ...state,
-                error: action.error,
-                statusOfActions: action.type
+                errorMassege: action.error.message,
+                statusOfActions: action.type,
             }
 
         default:
