@@ -94,7 +94,7 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading, errorMessage 
           <Text style={[styles.forgotYourPassword, styles.loginHereClr]}>Forgot your password?</Text>
         </Pressable>
         <View style={styles.actions}>
-          <Button onPress={() => {submitHandler()}}  style={[styles.button, styles.button1, styles.button1Typo]}>
+          <Button mode="contained" onPress={() => { submitHandler()}}  style={[styles.button, styles.button1, styles.button1Typo]}>
             Sign in
           </Button>
           <Pressable
@@ -231,23 +231,23 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
   button: {
-    shadowColor: "#cbd6ff",
+    paddingVertical: Padding.p_mini,
+    paddingHorizontal: Padding.p_xl,
+    justifyContent: "center",
+    width: 357,
+    backgroundColor: Color.colorSlateblue,
+    borderRadius: Border.br_3xs,
+    shadowOpacity: 1,
+    elevation: 20,
+    shadowRadius: 20,
     shadowOffset: {
       width: 0,
       height: 10,
     },
-    shadowRadius: 20,
-    elevation: 20,
-    shadowOpacity: 1,
-    backgroundColor: Color.colorSlateblue,
-    paddingVertical: Padding.p_mini,
-    paddingHorizontal: Padding.p_xl,
-    justifyContent: "center",
+    shadowColor: "#cbd6ff",
     alignItems: "center",
     flexDirection: "row",
-    width: 357,
-    borderRadius: Border.br_3xs,
-    textColor: Color.colorWhite
+    textColor: Color.colorWhite,
   },
   button3: {
     color: Color.colorDarkslategray,

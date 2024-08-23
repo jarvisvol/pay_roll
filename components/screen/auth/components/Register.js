@@ -3,11 +3,11 @@ import { StyleSheet, View, Text, Pressable, TextInput } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, Padding, Color, Border, FontSize } from "../../../../components/common/GlobalStyles";
-import { Button } from 'react-native-paper';
+import { Button, ActivityIndicator } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { userRegister } from '../store/action';
 
-const RegisterScreen = ({isLoading, userRegister, statusOfActions}) => {
+const RegisterScreen = ({isLoading, userRegister, statusOfActions, registerData}) => {
   const navigation = useNavigation();
 
   const [isFocused, setIsFocused] = useState({});
@@ -19,12 +19,14 @@ const RegisterScreen = ({isLoading, userRegister, statusOfActions}) => {
         phoneNumber: { value: '', error: false }
     })
 
-    const [fomValidation, setFomValidationFailed] = useState(false);
+  const [fomValidation, setFomValidationFailed] = useState(false);
+
+  // const [showPassword, setShowPassword] = useState(false)
 
     useEffect(() => {
         switch (statusOfActions) {
             case 'USER_REGISTER_SUCCESS':
-                router.push('/login');
+              navigation.navigate("otpVerification");
                 break;
             default:
                 break;
@@ -76,6 +78,7 @@ const RegisterScreen = ({isLoading, userRegister, statusOfActions}) => {
 
   return (
     <View style={styles.registerScreen}>
+      <ActivityIndicator style={{zIndex: 4, position: 'relative', top: '60%', opacity: 1}} animating={isLoading} color={Color.colorSlateblue} size={'large'}/>
       <View style={[styles.background, styles.headerPosition]} />
       <Image
         style={styles.frameIcon}
@@ -108,24 +111,32 @@ const RegisterScreen = ({isLoading, userRegister, statusOfActions}) => {
                 placeholder="Email" 
                 onFocus={() => setIsFocused({type: "email", focus: true})}
                 onBlur={() => setIsFocused({type: "email", focus: false})}
-                // value={loginDetail.email.value}
-                // onChangeText={(text) => {setLoginDetail({ ...loginDetail, email: { value: text, error: '' }}); setError({})}}
+                value={formObj.email.value}
+                onChangeText={(text) => setFormObj({ ...formObj, email: { value: text, error: '' } })}            
+            />
+            <TextInput
+                style={[isFocused.type === "phoneNumber" && isFocused.focus && styles.input, styles.input1, styles.inputSpaceBlock]} 
+                placeholder="Phone number" 
+                onFocus={() => setIsFocused({type: "phoneNumber", focus: true})}
+                onBlur={() => setIsFocused({type: "phoneNumber", focus: false})}
+                value={formObj.phoneNumber.value}
+                onChangeText={(text) => setFormObj({ ...formObj, phoneNumber: { value: text, error: '' } })} 
             />
             <TextInput
                 style={[isFocused.type === "password" && isFocused.focus && styles.input, styles.input1, styles.inputSpaceBlock]} 
                 placeholder="Password" 
                 onFocus={() => setIsFocused({type: "password", focus: true})}
                 onBlur={() => setIsFocused({type: "password", focus: false})}
-                // value={loginDetail.email.value}
-                // onChangeText={(text) => {setLoginDetail({ ...loginDetail, email: { value: text, error: '' }}); setError({})}}
+                value={formObj.password.value}
+                onChangeText={(text) => setFormObj({ ...formObj, password: { value: text, error: '' } })} 
             />
             <TextInput
                 style={[isFocused.type === "confirmPassword" && isFocused.focus && styles.input, styles.input1, styles.inputSpaceBlock]} 
                 placeholder="Confirm password" 
                 onFocus={() => setIsFocused({type: "confirmPassword", focus: true})}
                 onBlur={() => setIsFocused({type: "confirmPassword", focus: false})}
-                // value={loginDetail.email.value}
-                // onChangeText={(text) => {setLoginDetail({ ...loginDetail, email: { value: text, error: '' }}); setError({})}}
+                value={formObj.confirmPassword.value}
+                onChangeText={(text) => setFormObj({ ...formObj, confirmPassword: { value: text, error: '' } })} 
             />
           </View>
           <View style={styles.actions1}>
@@ -178,7 +189,7 @@ const RegisterScreen = ({isLoading, userRegister, statusOfActions}) => {
 const styles = StyleSheet.create({
   headerPosition: {
     width: 428,
-    left: 0,
+    left: 15,
     position: "absolute",
   },
   placeholderTypo: {
@@ -315,13 +326,13 @@ const styles = StyleSheet.create({
     marginTop: 26,
   },
   actions1: {
-    marginTop: 53,
+    marginTop: 30,
   },
   frame1: {
     top: 243,
     left: 31,
     width: 366,
-    height: 428,
+    height: 600,
     position: "absolute",
     overflow: "hidden",
   },
@@ -344,7 +355,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   socialMedia: {
-    top: 736,
+    top: 800,
     left: 114,
     alignItems: "center",
     position: "absolute",

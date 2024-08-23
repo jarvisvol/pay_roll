@@ -6,7 +6,7 @@ const initialState = {
     error: {},
     statusOfActions: '',
     isLoading: false,
-    registerData: {},
+    registerEmail: "",
     errorMessage: ""
 }
 
@@ -37,12 +37,13 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: true,
-                statusOfActions: action.type
+                statusOfActions: action.type,
+                registerEmail: ""
             }
         case types.USER_REGISTER_SUCCESS:
             return {
                 ...state,
-                registerData: action.result.data,
+                registerEmail: action.result.userDetails.email,
                 statusOfActions: action.type,
                 isLoading: false
             }
