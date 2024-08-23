@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { ActivityIndicator, Button } from "react-native-paper";
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
+import * as secureStore from 'expo-secure-store';
 
 const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify, resendOtp, otpLoginData }) => {
 
@@ -29,8 +30,9 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify,
   useEffect(() => {
     switch (statusOfActions) {
       case 'OTP_VERIFY_SUCCESS':
-        async function settoken() {
-          await secureStore.setItemAsync('accessToken', otpLoginData.accessToken)
+        const settoken = async() => {
+          const res = await secureStore.setItemAsync('accessToken', otpLoginData.accessToken)
+          return res;
         }
         settoken();
         navigation.navigate("index");
