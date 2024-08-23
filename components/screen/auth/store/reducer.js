@@ -7,7 +7,8 @@ const initialState = {
     statusOfActions: '',
     isLoading: false,
     registerEmail: "",
-    errorMessage: ""
+    errorMessage: "",
+    otpLoginData: {}
 }
 
 
@@ -64,14 +65,15 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 statusOfActions: action.type,
-                message: action.result.message
+                message: action.result.message,
+                otpLoginData: action.result.data
             }
-        case types.OTP_VERIFY_SUCCESS:
+        case types.OTP_VERIFY_FAILURE:
             return {
                 ...state,
                 isLoading: false,
                 statusOfActions: action.type,
-                errorMessage: action.result.message
+                errorMessage: action.error
             }
         case types.RESEND_OTP:
             return {

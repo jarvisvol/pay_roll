@@ -3,22 +3,14 @@ import { Text, StyleSheet, View, TextInput } from "react-native";
 import { FontFamily, Color, Border, FontSize, Padding } from "../../../common/GlobalStyles";
 import { connect } from 'react-redux';
 import { otpVerify, resendOtp } from '../store/action';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ActivityIndicator, Button } from "react-native-paper";
 import { useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify, resendOtp }) => {
+const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify, resendOtp, otpLoginData }) => {
 
-  // useEffect(() => {
-  //   switch (statusOfActions) {
-  //     case 'value':
-
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  // }, []);
+  const navigation = useNavigation();
 
   const [formOtp, setFormOtp] = useState({
     box1: { value: '' },
@@ -28,15 +20,25 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify,
     box5: { value: '' },
   });
 
-  const [selectedOtpBox, setSelectedOtpBox] = useState({
-    box1: true
-  })
-
   const inputref1 = useRef();
   const inputref2 = useRef();
   const inputref3 = useRef();
   const inputref4 = useRef();
   const inputref5 = useRef();
+
+  useEffect(() => {
+    switch (statusOfActions) {
+      case 'OTP_VERIFY_SUCCESS':
+        async function settoken() {
+          await secureStore.setItemAsync('accessToken', otpLoginData.accessToken)
+        }
+        settoken();
+        navigation.navigate("index");
+        break;
+      default:
+        break;
+    }
+  }, [statusOfActions]);
 
   const setOtpBoxValue = (boxNumber, value) => {
     switch (boxNumber) {
@@ -121,7 +123,6 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify,
 
   const otpSubmitHandler = () => {
     const joinedOtp = Object.values(formOtp).map((box) => box.value).join('');
-    console.log(joinedOtp);
     otpVerify({ otp: joinedOtp, email: registerEmail });
   }
 
@@ -376,7 +377,8 @@ const mapStateToProps = (state) => {
   return {
     registerEmail: state.authReducer.registerEmail,
     statusOfActions: state.authReducer.statusOfActions,
-    isLoading: state.authReducer.isLoading
+    isLoading: state.authReducer.isLoading,
+    otpLoginData: state.authReducer.otpLoginData,
   };
 };
 
