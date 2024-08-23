@@ -8,20 +8,6 @@ export const userLogin = (payload) => {
     }
 }
 
-export const loginSuccess = (result) =>{
-    return {
-        type: types.USER_LOGIN_SUCCESS,
-        result: result
-    }
-}
-
-export const loginFailure = (error) =>{
-    return {
-        type: types.USER_LOGIN_FAILURE,
-        error: error.result
-    }
-}
-
 export const userRegister = (payload) => {
     API.userRegister(payload);
     return {
@@ -29,16 +15,9 @@ export const userRegister = (payload) => {
     }
 }
 
-export const userRegisterSuccess = (result) =>{
+export const otpVerify = (payload) => {
+    API.otpVerify(payload);
     return {
-        type: types.USER_REGISTER_SUCCESS,
-        result: result
-    }
-}
-
-export const userRegisterFailure = (error) =>{
-    return {
-        type: types.USER_REGISTER_FAILURE,
-        error: error.result
+        type: types.OTP_VERIFY
     }
 }

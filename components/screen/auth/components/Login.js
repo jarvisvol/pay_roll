@@ -99,7 +99,7 @@ const Login = ({ userLogin, statusOfActions, loginData, isLoading, errorMessage 
           </Button>
           <Pressable
             style={styles.button2}
-            onPress={() => navigation.navigate("register")}
+            onPress={() => navigation.navigate("otpVerification")}
           >
             <Text style={[styles.button3, styles.button3Typo]}>
               Create new account

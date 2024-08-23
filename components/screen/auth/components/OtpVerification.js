@@ -2,23 +2,23 @@ import * as React from "react";
 import { Text, StyleSheet, View, TextInput } from "react-native";
 import { FontFamily, Color, Border, FontSize, Padding } from "../../../common/GlobalStyles";
 import { connect } from 'react-redux';
-import { userRegister } from '../store/action';
-import { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native-paper";
+import { otpVerify } from '../store/action';
+import { useState } from "react";
+import { ActivityIndicator, Button } from "react-native-paper";
 import { useRef } from "react";
 
-const OtpVerification = ({isLoading, statusOfActions, registerEmail}) => {
+const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify }) => {
 
-  useEffect(() => {
-    switch (statusOfActions) {
-      case 'value':
-        
-        break;
-      
-      default:
-        break;
-    }
-  }, []);
+  // useEffect(() => {
+  //   switch (statusOfActions) {
+  //     case 'value':
+
+  //       break;
+
+  //     default:
+  //       break;
+  //   }
+  // }, []);
 
   const [formOtp, setFormOtp] = useState({
     box1: { value: '' },
@@ -37,43 +37,85 @@ const OtpVerification = ({isLoading, statusOfActions, registerEmail}) => {
   const inputref3 = useRef();
   const inputref4 = useRef();
   const inputref5 = useRef();
+  const verifyRef = useRef();
 
   const setOtpBoxValue = (boxNumber, value) => {
     switch (boxNumber) {
       case 'box1':
-        setFormOtp({
-          ...formOtp,
-          box1: {value: value}
-        });
-        inputref2.current.focus();
+        if (value !== 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box1: { value: value }
+          });
+          inputref2.current.focus();
+        } else if (value === 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box1: { value: '' }
+          });
+        }
         break;
       case 'box2':
-        setFormOtp({
-          ...formOtp,
-          box2: {value: value}
-        });
-        inputref3.current.focus();
+        if (value !== 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box2: { value: value }
+          });
+          inputref3.current.focus();
+        } else if (value === 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box2: { value: '' }
+          });
+          inputref1.current.focus();
+        }
         break;
       case 'box3':
-        setFormOtp({
-          ...formOtp,
-          box3: {value: value}
-        });
-        inputref4.current.focus();
+        if (value !== 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box3: { value: value }
+          });
+          inputref4.current.focus();
+        } else if (value === 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box3: { value: '' }
+          });
+          inputref2.current.focus();
+        }
         break;
       case 'box4':
-        setFormOtp({
-          ...formOtp,
-          box4: {value: value}
-        });
-        inputref5.current.focus();
-      break;
+        if (value !== 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box4: { value: value }
+          });
+          inputref5.current.focus();
+        } else if (value === 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box4: { value: '' }
+          });
+          inputref3.current.focus();
+        }
+        break;
       case 'box5':
-        setFormOtp({
-          ...formOtp,
-          box5: {value: value}
-        });
-      break;
+        if (value !== 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box5: { value: value }
+          });
+          inputref5.current.blur()
+          verifyRef.current.focus();
+        } else if (value === 'Backspace') {
+          setFormOtp({
+            ...formOtp,
+            box5: { value: '' }
+          });
+          inputref4.current.focus();
+        }
+        break;
       default:
         break;
     }
@@ -81,7 +123,7 @@ const OtpVerification = ({isLoading, statusOfActions, registerEmail}) => {
 
   return (
     <View style={styles.verification}>
-      <ActivityIndicator style={{zIndex: 4, position: 'relative', top: '60%', opacity: 1}} animating={isLoading} color={Color.colorSlateblue} size={'large'}/>
+      <ActivityIndicator style={{ zIndex: 4, position: 'relative', top: '60%', opacity: 1 }} animating={isLoading} color={Color.colorSlateblue} size={'large'} />
       <View style={[styles.frame, styles.framePosition]}>
         <View
           style={[
@@ -96,77 +138,72 @@ const OtpVerification = ({isLoading, statusOfActions, registerEmail}) => {
             style={[styles.enterTheVerification, styles.didntReceiveCodeClr]}
           >
             {
-              `Enter the verification code we just sent to your Email ${registerEmail}.`
+              `Enter the verification code we just sent to your mail ${registerEmail}.`
             }
           </Text>
         </View>
         <View style={styles.frame1}>
-          <TextInput 
+          <TextInput
             ref={inputref1}
-            keyboardType="numeric" 
+            keyboardType="numeric"
             style={[styles.frame2, styles.frameBorder, styles.textalingmentbox]}
             value={formOtp.box1.value}
-            // onChangeText={(text) => setFormOtp({...formOtp, box1: { value: text }})}
             onKeyPress={event => {
               setOtpBoxValue('box1', event.nativeEvent.key)
             }}
             blurOnSubmit={false}
-            // onFocus={() => setSelectedOtpBox({box1: true})}
-            />
-          <TextInput 
+          />
+          <TextInput
             ref={inputref2}
-            keyboardType="numeric" 
+            keyboardType="numeric"
             style={[styles.frame3, styles.frameBorder, styles.textalingmentbox]}
             value={formOtp.box2.value}
-            // onChangeText={(text) => setFormOtp({...formOtp, box1: { value: text }})}
             onKeyPress={event => {
               setOtpBoxValue('box2', event.nativeEvent.key)
             }}
             blurOnSubmit={false}
-            // onFocus={() => setSelectedOtpBox({box1: true})}
           />
-          <TextInput 
+          <TextInput
             ref={inputref3}
-            keyboardType="numeric" 
+            keyboardType="numeric"
             style={[styles.frame4, styles.frameBorder, styles.textalingmentbox]}
             value={formOtp.box3.value}
-            // onChangeText={(text) => setFormOtp({...formOtp, box1: { value: text }})}
             onKeyPress={event => {
               setOtpBoxValue('box3', event.nativeEvent.key)
             }}
             blurOnSubmit={false}
-            // onFocus={() => setSelectedOtpBox({box1: true})}
           />
-          <TextInput 
+          <TextInput
             ref={inputref4}
-            keyboardType="numeric" 
+            keyboardType="numeric"
             style={[styles.frame5, styles.frameBorder, styles.textalingmentbox]}
             value={formOtp.box4.value}
-            // onChangeText={(text) => setFormOtp({...formOtp, box1: { value: text }})}
             onKeyPress={event => {
               setOtpBoxValue('box4', event.nativeEvent.key)
             }}
             blurOnSubmit={false}
-            // onFocus={() => setSelectedOtpBox({box1: true})}
           />
           <TextInput
-            ref={inputref5} 
-            keyboardType="numeric" 
+            ref={inputref5}
+            keyboardType="numeric"
             style={[styles.frame6, styles.frameBorder, styles.textalingmentbox]}
             value={formOtp.box5.value}
-            // onChangeText={(text) => setFormOtp({...formOtp, box1: { value: text }})}
             onKeyPress={event => {
               setOtpBoxValue('box5', event.nativeEvent.key)
             }}
             blurOnSubmit={false}
-            // onFocus={() => setSelectedOtpBox({box1: true})}
           />
         </View>
       </View>
       <View style={[styles.frame7, styles.framePosition]}>
-        <View style={styles.verifyWrapper}>
-          <Text style={[styles.verify, styles.textTypo]}>Verify</Text>
-        </View>
+        <Button
+          ref={verifyRef}
+          mode='contained'
+          style={[styles.verifyWrapper, styles.verify, styles.textTypo]}
+          onPress={() => { console.log('verify'); }}
+        >
+          Verify
+        </Button>
         <Text
           style={[
             styles.didntReceiveCodeContainer,
@@ -341,10 +378,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    userRegister: (payload) => {
-      dispatch(userRegister(payload));
+    otpVerify: (payload) => {
+      dispatch(otpVerify(payload));
     }
   };
 };
 
-export default OtpVerificationComponent =  connect(mapStateToProps, mapDispatchToProps)(OtpVerification);
+export default OtpVerificationComponent = connect(mapStateToProps, mapDispatchToProps)(OtpVerification);

@@ -25,6 +25,20 @@ export const userRegisterSuccess = (result) =>{
 export const userRegisterFailure = (error) =>{
     return {
         type: types.USER_REGISTER_FAILURE,
-        error: error.result
+        error: error
+    }
+}
+
+export const otpVerifySuccess = (result) =>{
+    return {
+        type: types.OTP_VERIFY_SUCCESS,
+        result: result
+    }
+}
+
+export const otpVerifyFailure = (error) =>{
+    return {
+        type: types.OTP_VERIFY_FAILURE,
+        error: error
     }
 }
