@@ -53,7 +53,46 @@ const authReducer = (state = initialState, action) => {
                 errorMassege: action.error.message,
                 statusOfActions: action.type,
             }
-
+        case types.OTP_VERIFY:
+            return {
+                ...state,
+                isLoading: true,
+                statusOfActions: action.type
+            }
+        case types.OTP_VERIFY_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                statusOfActions: action.type,
+                message: action.result.message
+            }
+        case types.OTP_VERIFY_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                statusOfActions: action.type,
+                errorMessage: action.result.message
+            }
+        case types.RESEND_OTP:
+            return {
+                ...state,
+                isLoading: true,
+                statusOfActions: action.type
+            }
+        case types.RESEND_OTP_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                statusOfActions: action.type,
+                message: action.result.message
+            }
+        case types.RESEND_OTP_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                statusOfActions: action.type,
+                errorMessage: action.result.message
+            }
         default:
             return {
                 ...state

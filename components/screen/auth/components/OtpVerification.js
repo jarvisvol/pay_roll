@@ -2,12 +2,12 @@ import * as React from "react";
 import { Text, StyleSheet, View, TextInput } from "react-native";
 import { FontFamily, Color, Border, FontSize, Padding } from "../../../common/GlobalStyles";
 import { connect } from 'react-redux';
-import { otpVerify } from '../store/action';
+import { otpVerify, resendOtp } from '../store/action';
 import { useState } from "react";
 import { ActivityIndicator, Button } from "react-native-paper";
 import { useRef } from "react";
 
-const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify }) => {
+const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify, resendOtp }) => {
 
   // useEffect(() => {
   //   switch (statusOfActions) {
@@ -37,7 +37,6 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify 
   const inputref3 = useRef();
   const inputref4 = useRef();
   const inputref5 = useRef();
-  const verifyRef = useRef();
 
   const setOtpBoxValue = (boxNumber, value) => {
     switch (boxNumber) {
@@ -107,7 +106,6 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify 
             box5: { value: value }
           });
           inputref5.current.blur()
-          verifyRef.current.focus();
         } else if (value === 'Backspace') {
           setFormOtp({
             ...formOtp,
@@ -119,6 +117,16 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify 
       default:
         break;
     }
+  }
+
+  const otpSubmitHandler = () => {
+    const joinedOtp = Object.values(formOtp).map((box) => box.value).join('');
+    console.log(joinedOtp);
+    otpVerify({ otp: joinedOtp, email: registerEmail });
+  }
+
+  const resendOtpHandler = () => {
+    resendOtp({email: registerEmail});
   }
 
   return (
@@ -197,24 +205,16 @@ const OtpVerification = ({ isLoading, statusOfActions, registerEmail, otpVerify 
       </View>
       <View style={[styles.frame7, styles.framePosition]}>
         <Button
-          ref={verifyRef}
           mode='contained'
           style={[styles.verifyWrapper, styles.verify, styles.textTypo]}
-          onPress={() => { console.log('verify'); }}
+          onPress={() => { otpSubmitHandler(); }}
         >
           Verify
         </Button>
-        <Text
-          style={[
-            styles.didntReceiveCodeContainer,
-            styles.enterTheVerificationTypo,
-          ]}
-        >
-          <Text
-            style={styles.didntReceiveCodeClr}
-          >{`Didn’t receive code? `}</Text>
-          <Text style={[styles.resend, styles.resendTypo]}>Resend</Text>
-        </Text>
+          <Text style={[styles.didntReceiveCodeClr, styles.enterTheVerificationTypo]}>
+            {`Didn’t receive code? `}
+          </Text>
+        <Button onPress={() => {resendOtpHandler()}} style={[styles.resend, styles.resendTypo]}>Resend</Button>
       </View>
     </View>
   );
@@ -345,6 +345,10 @@ const styles = StyleSheet.create({
   },
   resend: {
     color: Color.colorSlateblue,
+    position: 'relative',
+    top: -32,
+    left: 5
+
   },
   didntReceiveCodeContainer: {
     textAlign: "center",
@@ -380,6 +384,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     otpVerify: (payload) => {
       dispatch(otpVerify(payload));
+    },
+    resendOtp: (payload) => {
+      dispatch(resendOtp(payload));
     }
   };
 };

@@ -7,7 +7,9 @@ import {
     userRegisterSuccess,
     userRegisterFailure,
     otpVerifySuccess,
-    otpVerifyFailure
+    otpVerifyFailure,
+    resendOtpSuccess,
+    resendOtpFailure
 } from './interface.js'
 
 export const userLogin = async(payload) => {
@@ -34,6 +36,15 @@ export const otpVerify = async(payload) => {
         store.dispatch(otpVerifySuccess(result.data)); 
     } catch (error) {
         store.dispatch(otpVerifyFailure(error.response.data));
+    }
+}
+
+export const resendOtp = async(payload) => {
+    try {
+        const result = await HTTP.post('/resend-otp', payload);
+        store.dispatch(resendOtpSuccess(result.data));
+    } catch (error) {
+        store.dispatch(resendOtpFailure(error.response.data));   
     }
 }
 

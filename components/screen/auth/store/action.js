@@ -21,3 +21,10 @@ export const otpVerify = (payload) => {
         type: types.OTP_VERIFY
     }
 }
+
+export const resendOtp = (payload) => {
+    API.resendOtp(payload);
+    return {
+        type: types.RESEND_OTP
+    }
+}
