@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     overflow: "hidden",
-    height: 926,
     backgroundColor: Color.colorWhite,
   },
   warningMsg: {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = 'http://192.168.29.223:4000/api'
+const API_URL = 'https://lowbit.online/api'
 
 axios.defaults.baseURL = API_URL;
 axios.defaults.headers.common.Accept = 'application/json';
