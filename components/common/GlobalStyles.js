@@ -4,6 +4,7 @@ export const FontFamily = {
     poppinsMedium: "Poppins_500Medium",
     poppinsBold: "Poppins_700Bold",
     poppinsRegular: "Poppins_400Regular",
+    poppinsMediumItalic : "Poppins_500Medium_Italic"
   };
   /* font sizes */
   export const FontSize = {
@@ -11,6 +12,7 @@ export const FontFamily = {
     size_xl: 20,
     size_base: 16,
     size_11xl: 30,
+    size_xxsm: 9
   };
   /* Colors */
   export const Color = {
@@ -22,6 +24,7 @@ export const FontFamily = {
     colorDimgray: "#626262",
     colorBlack: "#000",
     colorGray: "#0a0a0a",
+    colorBackground: '#242C3B'
   };
   /* Paddings */
   export const Padding = {
@@ -34,5 +37,11 @@ export const FontFamily = {
   export const Border = {
     br_31xl: 50,
     br_3xs: 10,
+  };
+  export const FontWeights = {
+    wight_400: 400,
+    wieght_300: 300,
+    wight_200: 200,
+    wieght_600: 600,
   };
   

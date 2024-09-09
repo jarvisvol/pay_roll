@@ -18,13 +18,8 @@ export const getCurrentLocation = () =>
     );
   });
 
-export const locations = {
-  india1: {
-    latitude: 37.421998333333335,
-    longitude:  -122.084
-  },
-  india2: {
-    latitude: 34.421998333333335,
-    longitude: -132.084
-  }
+export const workModeConst = {
+  workFromHome: 1,
+  workFromOffice: 2, 
+  onSite: 3
 }
